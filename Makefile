@@ -1,16 +1,13 @@
 NAME = wolf3d
 SRC = src/*.c
 HEADERS = -Iincludes
-LIBLINK = -L./libft -lft
-SDLLINK = -L./sdl/build -lSDL2
-MLINK = -lm
-PTHREADS = -lpthread
+LINUX_LINKS = -L./libft -lft -L./sdl/build -lSDL2 -lm -lpthread
 GFLAGS = -Wall -Wextra -Werror -Ofast
 
 $(NAME):
 	make -C libft
 	make -C sdl
-	gcc $(GFLAGS) $(SRC) $(HEADERS) $(LIBLINK) $(SDLLINK) $(MLINK) -o $(NAME)
+	gcc $(GFLAGS) $(SRC) $(HEADERS) $(LINUX_LINKS) -o $(NAME)
 
 all: $(NAME)
 
@@ -19,7 +16,6 @@ clean:
 
 fclean: clean
 	/bin/rm -f libft/libft.a
-	/bin/rm -f sdl/SDL2.a
 	/bin/rm -f $(NAME)
 
 re: fclean all
