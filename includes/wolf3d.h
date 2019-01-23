@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 17:46:30 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/23 20:18:58 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/23 21:57:27 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,14 @@ typedef struct		s_cast
 	int				side;
 }					t_cast;
 
+typedef struct	s_mouse
+{
+	int			x;
+	int			y;
+	int			prev_x;
+	int			prev_y;
+}				t_mouse;
+
 typedef struct			s_player
 {
 	double				x;
@@ -75,6 +83,7 @@ typedef struct			s_engine
 	SDL_Surface			*surface;
 	t_player			*player;
 	t_map				*map;
+	t_mouse				*mouse;
 	int					quit;
 }						t_engine;
 
@@ -89,7 +98,9 @@ void		clear_screen(t_engine *engine, Uint32 color);
 void		update_screen(t_engine *engine);
 
 void		game_loop(t_engine *engine);
-double		raycast(t_player *player, int x, Uint32 *color);
+double		raycast(t_engine *engine, t_player *player, int x, Uint32 *color);
+
+void		set_map_color(t_engine *engine, Uint32 *color, int block);
 
 void		draw_column(t_engine *engine, int x, t_col y_col, Uint32 color);
 

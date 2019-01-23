@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 13:38:22 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/23 21:31:48 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/23 21:47:33 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int map[MAP_WIDTH][MAP_HEIGHT] =
   {1,1,1,1,1,1,1,1,1,1},
   {1,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,2,2,0,0,0,1},
+  {1,0,0,0,2,2,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,1},
   {1,1,1,1,1,1,1,1,1,1}
@@ -72,7 +72,7 @@ int		hit(t_ray *ray, t_cast *cast)
 	return (0);
 }
 
-double	raycast(t_player *player, int x, Uint32 *color)
+double	raycast(t_engine *engine, t_player *player, int x, Uint32 *color)
 {
 	double	cam;
 	t_ray	ray;
@@ -88,14 +88,8 @@ double	raycast(t_player *player, int x, Uint32 *color)
 		else
 			ray.wall_dist = (cast.mapy - player->y
 							+ (double)(1.0f - cast.nexty) / 2.0f) / ray.y;
-		switch(map[cast.mapx][cast.mapy])
-		{
-			case 1:  *color = 0x99992D;  break;
-			case 2:  *color = 0x00FF00;  break;
-			case 3:  *color = 0x0000FF;  break;
-			case 4:  *color = 0xFFFFFF;  break;
-			default: *color = 0x888800;  break;
-		}
+		set_map_color(engine, color, map[cast.mapx][cast.mapy]);
+		*color = (cast.side == 1) ? *color / 2 : *color;
 		return (ray.wall_dist);
 	}
 	return (2.0f);

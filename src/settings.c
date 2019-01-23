@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 21:27:55 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/23 19:22:02 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/23 22:21:21 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,6 @@ void	init_engine(t_engine *engine)
 {
 	engine->quit = 0;
 	set_player(engine);
+	engine->mouse->x = 0;
+	engine->mouse->y = 0;
 }
