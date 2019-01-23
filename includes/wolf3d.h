@@ -6,19 +6,25 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 17:46:30 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/22 22:38:24 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/23 18:56:29 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WOLF3D_H
 # define WOLF3D_H
 
-# define WINDOW_WIDTH	640
-# define WINDOW_HEIGHT	480
+# define WINDOW_WIDTH	1280
+# define WINDOW_HEIGHT	720
 
 # include <math.h>
 # include "../sdl/include/SDL.h"
 # include "../libft/libft.h"
+
+typedef struct	s_col
+{
+	int			start;
+	int			end;
+}				t_col;
 
 typedef struct	s_vec2
 {
@@ -26,23 +32,27 @@ typedef struct	s_vec2
 	double		y;
 }				t_vec2;
 
-typedef struct	s_line
+typedef struct			s_player
 {
-	t_vec2		start;
-	t_vec2		end;
-	int			dx;
-	int			dy;
-	int			dirx;
-	int			diry;
-	int			err;
-	int			err2;
-	Uint32		color;
-}				t_line;
+	double				x;
+	double				y;
+	double				dir_x;
+	double				dir_y;
+	double				plane_x;
+	double				plane_y;
+}						t_player;
+
+typedef struct			s_map
+{
+	int					**map;
+}						t_map;
 
 typedef struct			s_engine
 {
 	SDL_Window			*window;
 	SDL_Surface			*surface;
+	t_player			*player;
+	t_map				*map;
 	int					quit;
 }						t_engine;
 
@@ -57,8 +67,9 @@ void		clear_screen(t_engine *engine, Uint32 color);
 void		update_screen(t_engine *engine);
 
 void		game_loop(t_engine *engine);
+double		raycast(t_player *player, int x, Uint32 *color);
 
-void		draw_line(t_engine *engine, t_vec2 p1, t_vec2 p2, Uint32 color);
+void		draw_column(t_engine *engine, int x, t_col y_col, Uint32 color);
 
 void		benchmark(t_engine *engine);
 

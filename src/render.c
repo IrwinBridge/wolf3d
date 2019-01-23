@@ -6,41 +6,54 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 20:20:39 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/22 22:22:33 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/23 19:05:17 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-int		map[5][5] =
+void	render_background(t_engine *engine)
+{
+	int x;
+	int y;
+
+	y = 0;
+	while (y < WINDOW_HEIGHT)
 	{
-		{1, 1, 1, 1, 1},
-		{1, 0, 0, 0, 1},
-		{1, 0, 0, 0, 1},
-		{1, 0, 0, 0, 1},
-		{1, 1, 1, 1, 1}
-	};
+		x = 0;
+		while (x < WINDOW_WIDTH)
+		{
+			if (y < WINDOW_HEIGHT / 2)
+				put_pixel(engine, x, y, 0xB0AEAE);
+			else
+				put_pixel(engine, x, y, 0x696969);
+			x++;
+		}
+		y++;
+	}
+}
 
 void	render(t_engine *engine)
 {
-	int x;
-	int top_offset;
-	int bottom_offset;
-	t_vec2 p1;
-	t_vec2 p2;
+	int		x;
+	double	wall_dist;
+	int		line_height;
+	Uint32	color = 0;
+	t_col	col;
 
-	clear_screen(engine, 0xFFFFFF);
+	clear_screen(engine, 0x000000);
+	render_background(engine);
 	x = 0;
-	top_offset = 20;
-	bottom_offset = WINDOW_HEIGHT - 20;
-	//color = SDL_MapRGBA(engine->surface->format, 255, 0, 0, 255);
 	while (x < WINDOW_WIDTH)
 	{
-		p1.x = x;
-		p2.x = x;
-		p1.y = top_offset + (int)(x / 10.0f);
-		p2.y = bottom_offset - (int)(x / 10.0f);
-		draw_line(engine, p1, p2, 0xFF0000);
+		wall_dist = raycast(engine->player, x, &color);
+		line_height = (int)(WINDOW_HEIGHT / wall_dist);
+
+		col.start = (int)(WINDOW_HEIGHT / 2 - line_height / 2);
+		col.start = (col.start < 0) ? 0 : col.start;
+		col.end = (int)(WINDOW_HEIGHT / 2 + line_height / 2);
+		col.end = (col.end >= WINDOW_HEIGHT) ? WINDOW_HEIGHT - 1 : col.end;
+		draw_column(engine, x, col, color);
 		x++;
 	}
 	update_screen(engine);
