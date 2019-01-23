@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 17:46:30 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/23 18:56:29 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/23 20:18:58 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # define WINDOW_WIDTH	1280
 # define WINDOW_HEIGHT	720
+
+# define VIEW_MAX		100
 
 # include <math.h>
 # include "../sdl/include/SDL.h"
@@ -31,6 +33,26 @@ typedef struct	s_vec2
 	double		x;
 	double		y;
 }				t_vec2;
+
+typedef struct		s_ray
+{
+	double			x;
+	double			y;
+	double			sx;
+	double			sy;
+	double			dx;
+	double			dy;
+	double			wall_dist;
+}					t_ray;
+
+typedef struct		s_cast
+{
+	int				mapx;
+	int				mapy;
+	int				nextx;
+	int				nexty;
+	int				side;
+}					t_cast;
 
 typedef struct			s_player
 {
