@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 20:20:39 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/23 21:51:05 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/24 23:21:55 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	render_background(t_engine *engine)
 		while (x < WINDOW_WIDTH)
 		{
 			if (y < WINDOW_HEIGHT / 2)
-				put_pixel(engine, x, y, 0xB0AEAE);
+				put_pixel(engine, x, y, 0xB1D9DF);
 			else
 				put_pixel(engine, x, y, 0x696969);
 			x++;

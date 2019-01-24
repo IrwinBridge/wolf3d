@@ -6,12 +6,15 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 12:58:39 by cmelara-          #+#    #+#             */
-/*   Updated: 2018/12/07 17:40:23 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/24 23:02:24 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
+# define BUFF_SIZE 32
+# define MAX_FD 10240
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -77,6 +80,7 @@ int					ft_abs(int n);
 char				*ft_itoa(int n);
 void				ft_putnbr(int n);
 void				ft_putnbr_fd(int n, int fd);
+int					get_next_line(const int fd, char **line);
 
 typedef struct		s_list
 {

@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 21:27:55 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/23 22:21:21 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/24 22:50:42 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,5 @@ void	init_engine(t_engine *engine)
 	set_player(engine);
 	engine->mouse->x = 0;
 	engine->mouse->y = 0;
+	SDL_ShowCursor(SDL_DISABLE);
 }

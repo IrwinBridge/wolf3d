@@ -6,26 +6,11 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 13:38:22 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/23 21:47:33 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/24 23:09:58 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-
-#define MAP_WIDTH 24
-#define MAP_HEIGHT 24
-
-int map[MAP_WIDTH][MAP_HEIGHT] =
-{
-  {1,1,1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,2,2,0,0,0,1},
-  {1,0,0,0,2,2,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,1}
-};
 
 void	set_ray(t_player *player, t_ray *ray, t_cast *cast, double cam)
 {
@@ -62,10 +47,10 @@ int		hit(t_ray *ray, t_cast *cast)
 			cast->mapy += cast->nexty;
 			cast->side = 1;
 		}
-		if (cast->mapx < 0 || cast->mapx > MAP_WIDTH || cast->mapy < 0
-			|| cast->mapx > MAP_HEIGHT)
+		if (cast->mapx < 0 || cast->mapx > ray->map->mapWidth || cast->mapy < 0
+			|| cast->mapx > ray->map->mapHeight)
 			break ;
-		if (map[cast->mapx][cast->mapy] > 0)
+		if (ray->map->map[cast->mapx][cast->mapy] > 0)
 			return (1);
 		passed_dist++;
 	}
@@ -78,6 +63,7 @@ double	raycast(t_engine *engine, t_player *player, int x, Uint32 *color)
 	t_ray	ray;
 	t_cast	cast;
 
+	ray.map = engine->map;
 	cam = 2.0f * (double)x / (double)WINDOW_WIDTH - 1.0f;
 	set_ray(player, &ray, &cast, cam);
 	if (hit(&ray, &cast))
@@ -88,7 +74,7 @@ double	raycast(t_engine *engine, t_player *player, int x, Uint32 *color)
 		else
 			ray.wall_dist = (cast.mapy - player->y
 							+ (double)(1.0f - cast.nexty) / 2.0f) / ray.y;
-		set_map_color(engine, color, map[cast.mapx][cast.mapy]);
+		set_map_color(engine, color, engine->map->map[cast.mapx][cast.mapy]);
 		*color = (cast.side == 1) ? *color / 2 : *color;
 		return (ray.wall_dist);
 	}

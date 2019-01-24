@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 17:46:30 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/23 21:57:27 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/24 23:07:15 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define VIEW_MAX		100
 
 # include <math.h>
+# include <fcntl.h>
 # include "../sdl/include/SDL.h"
 # include "../libft/libft.h"
 
@@ -34,6 +35,13 @@ typedef struct	s_vec2
 	double		y;
 }				t_vec2;
 
+typedef struct	s_map
+{
+	int			**map;
+	int			mapWidth;
+	int			mapHeight;
+}				t_map;
+
 typedef struct		s_ray
 {
 	double			x;
@@ -43,6 +51,7 @@ typedef struct		s_ray
 	double			dx;
 	double			dy;
 	double			wall_dist;
+	t_map			*map;
 }					t_ray;
 
 typedef struct		s_cast
@@ -72,11 +81,6 @@ typedef struct			s_player
 	double				plane_y;
 }						t_player;
 
-typedef struct			s_map
-{
-	int					**map;
-}						t_map;
-
 typedef struct			s_engine
 {
 	SDL_Window			*window;
@@ -105,5 +109,6 @@ void		set_map_color(t_engine *engine, Uint32 *color, int block);
 void		draw_column(t_engine *engine, int x, t_col y_col, Uint32 color);
 
 void		benchmark(t_engine *engine);
+void		parser(t_map *wo, char *a);
 
 #endif
