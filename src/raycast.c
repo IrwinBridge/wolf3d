@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 13:38:22 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/24 23:09:58 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/24 23:46:14 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ double	raycast(t_engine *engine, t_player *player, int x, Uint32 *color)
 			ray.wall_dist = (cast.mapy - player->y
 							+ (double)(1.0f - cast.nexty) / 2.0f) / ray.y;
 		set_map_color(engine, color, engine->map->map[cast.mapx][cast.mapy]);
-		*color = (cast.side == 1) ? *color / 2 : *color;
+		*color = (cast.side == 1) ? (Uint32)(*color * 0.75f) : *color;
 		return (ray.wall_dist);
 	}
 	return (2.0f);
