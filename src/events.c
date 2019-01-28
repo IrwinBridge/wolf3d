@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 21:24:04 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/28 21:42:54 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/28 22:31:55 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void	handle_events(t_engine *engine, SDL_Event *e)
 			engine->quit = 1;
 		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_w)
 			move_towards(engine, 1);
-		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_s)
+		else if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_s)
 			move_towards(engine, -1);
 		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_d)
 			move_side(engine, 1);
-		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_a)
+		else if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_a)
 			move_side(engine, -1);
 		if (e->type == SDL_MOUSEMOTION)
 			mouse_move(engine, e);
