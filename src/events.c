@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 21:24:04 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/28 20:56:51 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/28 21:42:54 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,6 @@ void	mouse_move(t_engine *engine, SDL_Event *e)
 
 void	handle_events(t_engine *engine, SDL_Event *e)
 {
-	int		mapx;
-	int		mapy;
-	double	mspd;
-
-	mspd = engine->frameTime * 10.0f;
 	while (SDL_PollEvent(e))
 	{
 		if (e->type == SDL_QUIT)
@@ -53,41 +48,13 @@ void	handle_events(t_engine *engine, SDL_Event *e)
 		if (e->type == SDL_KEYUP && e->key.keysym.sym == SDLK_ESCAPE)
 			engine->quit = 1;
 		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_w)
-		{
-			mapx = (int)(engine->player->x + engine->player->dir_x * mspd);
-			mapy = (int)(engine->player->y + engine->player->dir_y * mspd);
-			if (!engine->map->map[mapx][(int)engine->player->y])
-				engine->player->x += engine->player->dir_x * mspd;
-			if (!engine->map->map[(int)engine->player->x][mapy])
-				engine->player->y += engine->player->dir_y * mspd;
-		}
+			move_towards(engine, 1);
 		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_s)
-		{
-			mapx = (int)(engine->player->x - engine->player->dir_x * mspd);
-			mapy = (int)(engine->player->y - engine->player->dir_y * mspd);
-			if (!engine->map->map[mapx][(int)engine->player->y])
-				engine->player->x -= engine->player->dir_x * mspd;
-			if (!engine->map->map[(int)engine->player->x][mapy])
-				engine->player->y -= engine->player->dir_y * mspd;
-		}
+			move_towards(engine, -1);
 		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_d)
-		{
-			mapx = (int)(engine->player->x + engine->player->plane_x * mspd);
-			mapy = (int)(engine->player->y + engine->player->plane_y * mspd);
-			if (!engine->map->map[mapx][(int)engine->player->y])
-				engine->player->x += engine->player->plane_x * mspd;
-			if (!engine->map->map[(int)engine->player->x][mapy])
-				engine->player->y += engine->player->plane_y * mspd;
-		}
+			move_side(engine, 1);
 		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_a)
-		{
-			mapx = (int)(engine->player->x - engine->player->plane_x * mspd);
-			mapy = (int)(engine->player->y - engine->player->plane_y * mspd);
-			if (!engine->map->map[mapx][(int)engine->player->y])
-				engine->player->x -= engine->player->plane_x * mspd;
-			if (!engine->map->map[(int)engine->player->x][mapy])
-				engine->player->y -= engine->player->plane_y * mspd;
-		}
+			move_side(engine, -1);
 		if (e->type == SDL_MOUSEMOTION)
 			mouse_move(engine, e);
 	}

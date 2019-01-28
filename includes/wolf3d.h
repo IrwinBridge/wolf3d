@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 17:46:30 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/28 20:18:41 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/28 21:40:15 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,10 @@ void		update_screen(t_engine *engine);
 void		game_loop(t_engine *engine);
 t_ray		*raycast(t_engine *engine, t_player *player, int x);
 
-void		set_map_color(t_engine *engine, Uint32 *color, int block);
-
 void		draw_column(t_engine *engine, int x, t_col y_col, t_ray *ray);
+
+void		move_towards(t_engine *engine, int i);
+void		move_side(t_engine *engine, int i);
 
 void		benchmark(t_engine *engine);
 void		parser(t_map *wo, char *a);

@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 21:46:59 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/28 21:20:09 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/28 21:47:52 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	draw_column(t_engine *engine, int x, t_col y_column, t_ray *ray)
 				/ (double)ray->wall_height) * 64);
 	tex_rect = ft_memalloc(sizeof(SDL_Rect));
 	tex_rect->w = 1;
-	tex_rect->h = TEX_H - temp;
-	//printf("tex_x: %d\n", ray->tex_x);
+	tex_rect->h = TEX_H - temp * 2;
 	tex_rect->x =  TEX_W * (ray->wall_id - 1) + ray->tex_x;
 	tex_rect->y = temp;
 
