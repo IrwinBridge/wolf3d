@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 21:24:04 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/28 22:31:55 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/28 22:50:44 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	fps_count(t_engine *engine, double *time, double *oldTime, double *ft)
 	*time = SDL_GetTicks();
 	*ft = (*time - *oldTime) / 1000.0f;
 	engine->frameTime = *ft;
-	//printf("FPS: %f\n", 1.0f / *ft);
+	printf("FPS: %f\n", 1.0f / *ft);
 }
 
 void	game_loop(t_engine *engine)

@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 20:20:39 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/28 20:22:06 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/28 22:47:56 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,15 @@
 
 void	render_background(t_engine *engine)
 {
-	int x;
-	int y;
+	SDL_Rect	rect;
 
-	y = 0;
-	while (y < WINDOW_HEIGHT)
-	{
-		x = 0;
-		while (x < WINDOW_WIDTH)
-		{
-			if (y < WINDOW_HEIGHT / 2)
-				put_pixel(engine, x, y, 0xB1D9DF);
-			else
-				put_pixel(engine, x, y, 0x707070);
-			x++;
-		}
-		y++;
-	}
+	rect.w = WINDOW_WIDTH;
+	rect.h = WINDOW_HEIGHT / 2;
+	rect.x = 0;
+	rect.y = 0;
+	SDL_FillRect(engine->surface, &rect, 0xB1D9DF);
+	rect.y = WINDOW_HEIGHT / 2;
+	SDL_FillRect(engine->surface, &rect, 0x707070);
 }
 
 void	render_walls(t_engine *engine)
@@ -54,7 +46,7 @@ void	render_walls(t_engine *engine)
 	}
 }
 
-void	render_hud(t_engine *engine)
+void	render_HUD(t_engine *engine)
 {
 	SDL_Rect rect;
 
@@ -69,6 +61,6 @@ void	render(t_engine *engine)
 {
 	render_background(engine);
 	render_walls(engine);
-	render_hud(engine);
+	render_HUD(engine);
 	update_screen(engine);
 }
