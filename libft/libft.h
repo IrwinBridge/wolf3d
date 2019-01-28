@@ -6,15 +6,15 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 12:58:39 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/24 23:02:24 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/25 18:24:25 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# define BUFF_SIZE 32
-# define MAX_FD 10240
+# define BUFF_SIZE	32
+# define MAX_FD		10240
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -78,6 +78,7 @@ void				ft_putstr_fd(char const *s, int fd);
 void				ft_putendl_fd(char const *s, int fd);
 int					ft_abs(int n);
 char				*ft_itoa(int n);
+void				ft_putendl(char const *s);
 void				ft_putnbr(int n);
 void				ft_putnbr_fd(int n, int fd);
 int					get_next_line(const int fd, char **line);

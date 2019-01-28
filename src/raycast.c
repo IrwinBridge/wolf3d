@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 13:38:22 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/24 23:46:14 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/28 19:26:44 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int		hit(t_ray *ray, t_cast *cast)
 			cast->mapy += cast->nexty;
 			cast->side = 1;
 		}
-		if (cast->mapx < 0 || cast->mapx > ray->map->mapWidth || cast->mapy < 0
-			|| cast->mapx > ray->map->mapHeight)
+		if (cast->mapx < 0 || cast->mapx > ray->map->mapWidth
+			|| cast->mapy < 0 || cast->mapx > ray->map->mapHeight)
 			break ;
 		if (ray->map->map[cast->mapx][cast->mapy] > 0)
 			return (1);
@@ -57,26 +57,35 @@ int		hit(t_ray *ray, t_cast *cast)
 	return (0);
 }
 
-double	raycast(t_engine *engine, t_player *player, int x, Uint32 *color)
+t_ray	*raycast(t_engine *engine, t_player *player, int x)
 {
 	double	cam;
-	t_ray	ray;
+	t_ray	*ray;
 	t_cast	cast;
 
-	ray.map = engine->map;
+	ray = ft_memalloc(sizeof(t_ray));
+	ray->map = engine->map;
 	cam = 2.0f * (double)x / (double)WINDOW_WIDTH - 1.0f;
-	set_ray(player, &ray, &cast, cam);
-	if (hit(&ray, &cast))
+	set_ray(player, ray, &cast, cam);
+	if (hit(ray, &cast))
 	{
 		if (cast.side == 0)
-			ray.wall_dist = (cast.mapx - player->x
-							+ (double)(1.0f - cast.nextx) / 2.0f) / ray.x;
+			ray->wall_dist = (cast.mapx - player->x
+							+ (double)(1.0f - cast.nextx) / 2.0f) / ray->x;
 		else
-			ray.wall_dist = (cast.mapy - player->y
-							+ (double)(1.0f - cast.nexty) / 2.0f) / ray.y;
-		set_map_color(engine, color, engine->map->map[cast.mapx][cast.mapy]);
-		*color = (cast.side == 1) ? (Uint32)(*color * 0.75f) : *color;
-		return (ray.wall_dist);
+			ray->wall_dist = (cast.mapy - player->y
+							+ (double)(1.0f - cast.nexty) / 2.0f) / ray->y;
+		ray->wall_id = engine->map->map[cast.mapx][cast.mapy];
+		ray->wall_x = (!cast.side) ? player->y + ray->wall_dist * ray->y
+							: player->x + ray->wall_dist * ray->x;
+		ray->wall_x -= floor(ray->wall_x);
+		ray->tex_x = (int)(ray->wall_x * (double)TEX_W);
+		if ((!cast.side && ray->x > 0) || (cast.side == 1 && ray->y < 0))
+			ray->tex_x = TEX_W - ray->tex_x - 1;
+		ray->cast = cast;
+		return (ray);
 	}
-	return (2.0f);
+	ray->wall_dist = 2.0f;
+	ray->cast = cast;
+	return (ray);
 }

@@ -6,14 +6,30 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 18:59:18 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/24 23:16:41 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/28 19:06:40 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
+SDL_Surface	*load_image(t_engine *engine, char *path)
+{
+	SDL_Surface	*loaded;
+	SDL_Surface	*optimized;
+
+	IMG_Init(IMG_INIT_PNG);
+	loaded = IMG_Load(path);
+	optimized = NULL;
+	if (loaded)
+		optimized = SDL_ConvertSurface(loaded, engine->surface->format, 0);
+	SDL_FreeSurface(loaded);
+	return (optimized);
+}
+
 int			free_engine(t_engine *engine)
 {
+	SDL_FreeSurface(engine->gun);
+	SDL_FreeSurface(engine->map->texture);
 	SDL_DestroyWindow(engine->window);
 	SDL_Quit();
 	return (0);
@@ -34,7 +50,8 @@ t_engine	*initialize(char *title)
 			!(engine->mouse = ft_memalloc(sizeof(t_mouse))) ||
 			!(engine->window = SDL_CreateWindow(title,
 							SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-							WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN)) ||
+							WINDOW_WIDTH, WINDOW_HEIGHT,
+							SDL_WINDOW_SHOWN)) ||
 			!(engine->map = ft_memalloc(sizeof(t_map))))
 		{
 			ft_putendl(SDL_GetError());

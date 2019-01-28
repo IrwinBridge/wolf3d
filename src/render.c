@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 20:20:39 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/24 23:21:55 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/28 20:22:06 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,34 +26,49 @@ void	render_background(t_engine *engine)
 			if (y < WINDOW_HEIGHT / 2)
 				put_pixel(engine, x, y, 0xB1D9DF);
 			else
-				put_pixel(engine, x, y, 0x696969);
+				put_pixel(engine, x, y, 0x707070);
 			x++;
 		}
 		y++;
 	}
 }
 
-void	render(t_engine *engine)
+void	render_walls(t_engine *engine)
 {
 	int		x;
-	double	wall_dist;
-	int		line_height;
-	Uint32	color = 0;
-	t_col	col;
+	t_col	column;
+	t_ray	*ray;
 
-	clear_screen(engine, 0x000000);
-	render_background(engine);
 	x = 0;
 	while (x < WINDOW_WIDTH)
 	{
-		wall_dist = raycast(engine, engine->player, x, &color);
-		line_height = (int)(WINDOW_HEIGHT / wall_dist);
-		col.start = (int)(WINDOW_HEIGHT / 2 - line_height / 2);
-		col.start = (col.start < 0) ? 0 : col.start;
-		col.end = (int)(WINDOW_HEIGHT / 2 + line_height / 2);
-		col.end = (col.end >= WINDOW_HEIGHT) ? WINDOW_HEIGHT - 1 : col.end;
-		draw_column(engine, x, col, color);
+		ray = raycast(engine, engine->player, x);
+		ray->wall_height = (int)(WINDOW_HEIGHT / ray->wall_dist);
+		column.start = (int)(WINDOW_HEIGHT / 2 - ray->wall_height / 2);
+		column.start = (column.start < 0) ? 0 : column.start;
+		column.end = (int)(WINDOW_HEIGHT / 2 + ray->wall_height / 2);
+		column.end = (column.end >= WINDOW_HEIGHT)
+									? WINDOW_HEIGHT - 1 : column.end;
+		draw_column(engine, x, column, ray);
 		x++;
 	}
+}
+
+void	render_hud(t_engine *engine)
+{
+	SDL_Rect rect;
+
+	rect.w = 512;
+	rect.h = 512;
+	rect.x = (int)(WINDOW_WIDTH / 2) - rect.w / 2;
+	rect.y = WINDOW_HEIGHT - rect.h;
+	SDL_BlitScaled(engine->gun, NULL, engine->surface, &rect);
+}
+
+void	render(t_engine *engine)
+{
+	render_background(engine);
+	render_walls(engine);
+	render_hud(engine);
 	update_screen(engine);
 }

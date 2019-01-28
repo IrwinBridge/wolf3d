@@ -6,12 +6,18 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 17:49:27 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/22 21:27:38 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/28 19:06:08 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 #include <stdio.h>
+
+void	load_resources(t_engine *engine)
+{
+	engine->gun = load_image(engine, "resources/gun0.png");
+	engine->map->texture = load_image(engine, "resources/walls.png");
+}
 
 int		main(void)
 {
@@ -19,6 +25,7 @@ int		main(void)
 
 	if (!(engine = initialize("Maze")))
 		return (0);
+	load_resources(engine);
 	render(engine);
 	game_loop(engine);
 	free_engine(engine);
