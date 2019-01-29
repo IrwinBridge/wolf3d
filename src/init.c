@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 18:59:18 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/28 19:06:40 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/29 13:07:42 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ SDL_Surface	*load_image(t_engine *engine, char *path)
 
 int			free_engine(t_engine *engine)
 {
+	system("killall -STOP afplay");
 	SDL_FreeSurface(engine->gun);
 	SDL_FreeSurface(engine->map->texture);
 	SDL_DestroyWindow(engine->window);
@@ -51,7 +52,7 @@ t_engine	*initialize(char *title)
 			!(engine->window = SDL_CreateWindow(title,
 							SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 							WINDOW_WIDTH, WINDOW_HEIGHT,
-							SDL_WINDOW_SHOWN)) ||
+							SDL_WINDOW_OPENGL)) ||
 			!(engine->map = ft_memalloc(sizeof(t_map))))
 		{
 			ft_putendl(SDL_GetError());
@@ -60,7 +61,6 @@ t_engine	*initialize(char *title)
 		else
 			engine->surface = SDL_GetWindowSurface(engine->window);
 	}
-	parser(engine->map, "maps/level0");
 	init_engine(engine);
 	return (engine);
 }

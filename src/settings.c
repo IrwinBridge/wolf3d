@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 21:27:55 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/24 22:50:42 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/29 13:24:37 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ int		set_player(t_engine *engine)
 
 void	init_engine(t_engine *engine)
 {
+	engine->ray = ft_memalloc(sizeof(t_ray));
 	engine->quit = 0;
 	set_player(engine);
 	engine->mouse->x = 0;
 	engine->mouse->y = 0;
 	SDL_ShowCursor(SDL_DISABLE);
+	parser(engine, "maps/level0");
 }

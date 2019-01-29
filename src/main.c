@@ -6,12 +6,11 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 17:49:27 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/28 19:06:08 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/29 12:47:33 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include <stdio.h>
 
 void	load_resources(t_engine *engine)
 {

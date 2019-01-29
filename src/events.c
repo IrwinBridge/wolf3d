@@ -6,7 +6,7 @@
 /*   By: cmelara- <cmelara-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 21:24:04 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/01/28 22:50:44 by cmelara-         ###   ########.fr       */
+/*   Updated: 2019/01/29 12:53:13 by cmelara-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	mouse_move(t_engine *engine, SDL_Event *e)
 
 	engine->mouse->prev_x = engine->mouse->x;
 	engine->mouse->x = e->motion.x;
-	deltax = (engine->mouse->prev_x - engine->mouse->x) * engine->frameTime;
+	deltax = (engine->mouse->prev_x - engine->mouse->x) * engine->frame_time
+			* 0.5f;
 	turn_player(engine->player, deltax);
 }
 
@@ -57,30 +58,37 @@ void	handle_events(t_engine *engine, SDL_Event *e)
 			move_side(engine, -1);
 		if (e->type == SDL_MOUSEMOTION)
 			mouse_move(engine, e);
+		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_1)
+			parser(engine, "maps/level0");
+		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_2)
+			parser(engine, "maps/level1");
+		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_3)
+			parser(engine, "maps/level2");
+		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_4)
+			parser(engine, "maps/level3");
 	}
 }
 
-void	fps_count(t_engine *engine, double *time, double *oldTime, double *ft)
+void	fps_count(t_engine *engine, double *time, double *old_time, double *ft)
 {
-	*oldTime = *time;
+	*old_time = *time;
 	*time = SDL_GetTicks();
-	*ft = (*time - *oldTime) / 1000.0f;
-	engine->frameTime = *ft;
-	printf("FPS: %f\n", 1.0f / *ft);
+	*ft = (*time - *old_time) / 1000.0f;
+	engine->frame_time = *ft;
 }
 
 void	game_loop(t_engine *engine)
 {
 	SDL_Event	e;
 	double		time;
-	double		oldTime;
-	double		frameTime;
+	double		old_time;
+	double		frame_time;
 
 	time = 0;
-	oldTime = 0;
+	old_time = 0;
 	while (!engine->quit)
 	{
-		fps_count(engine, &time, &oldTime, &frameTime);
+		fps_count(engine, &time, &old_time, &frame_time);
 		render(engine);
 		handle_events(engine, &e);
 	}
